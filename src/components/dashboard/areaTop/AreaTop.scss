@@ -1,0 +1,130 @@
+.content-area-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+
+  .area-top-title {
+    color: var(--text-color-inverted);
+  }
+
+  .area-top-l {
+    display: flex;
+    align-items: center;
+    column-gap: 6px;
+  }
+
+  .sidebar-open-btn {
+    display: inline-flex;
+    align-items: center;
+    display: none;
+    margin-bottom: -1px;
+    color: var(--text-color-inverted);
+
+    @media (max-width: 768px) {
+      display: inline-flex;
+    }
+  }
+
+  .search-input {
+    height: 40px;
+    border: 1px solid var(--border-color);
+    border-radius: 15px; // Bo tròn cho thanh tìm kiếm
+    padding: 0 10px; // Khoảng cách bên trong
+    margin-right: 15px; // Khoảng cách với date picker
+    outline: none; // Bỏ viền khi chọn
+    transition: border-color 0.3s;
+
+    &:focus {
+      border-color: var(--primary-color); // Đổi màu viền khi focus
+    }
+  }
+
+
+  // react-date-range plugin theme customization
+  .date-range-wrapper {
+    display: inline-block;
+    box-shadow: var(--light-shadow1);
+    border-radius: 15px;
+
+    .rdrDateDisplay {
+      margin: 0;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      border-radius: 15px;
+      overflow: hidden;
+    }
+
+    .rdrDateRangeWrapper {
+      border-radius: 15px;
+      position: relative;
+    }
+
+    .rdrMonthAndYearWrapper {
+      position: absolute;
+      top: 100%;
+      width: 100%;
+      background-color: var(--light-color);
+      padding-top: 0;
+      height: 40px;
+      z-index: 1;
+      border-radius: 15px;
+    }
+
+    .rdrMonth {
+      padding: 0;
+      z-index: 1;
+    }
+
+    .rdrWeekDays {
+      position: absolute;
+      top: calc(100% + 40px);
+      left: 0;
+      width: 100%;
+      background-color: var(--light-color);
+      height: 32px;
+      z-index: 1;
+      border-radius: 15px;
+    }
+
+    .rdrDays {
+      position: absolute;
+      top: calc(100% + 40px + 32px);
+      left: 0;
+      width: 100%;
+      background-color: var(--light-color);
+      z-index: 1;
+      border-radius: 15px;
+    }
+
+    &.hide-date-range {
+      .rdrMonthAndYearWrapper {
+        display: none;
+      }
+      .rdrMonth {
+        padding: 0;
+      }
+      .rdrWeekDays,
+      .rdrDays {
+        display: none;
+      }
+    }
+
+    .rdrDateDisplayWrapper {
+      background-color: var(--secondary-color);
+      border-color: var(--secondary-color);
+      outline: var(--secondary-color);
+      border-radius: 15px;
+
+      * {
+        background-color: var(--secondary-color);
+        border-color: var(--secondary-color);
+        outline: var(--secondary-color);
+        box-shadow: none;
+        color: var(--base-text-color);
+      }
+    }
+  }
+}
