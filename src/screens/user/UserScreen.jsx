@@ -1,12 +1,9 @@
-import { AreaCards, AreaCharts, AreaTable, AreaTop } from "../../components";
+import { UserTable } from "../../components";
 
 const User = () => {
   return (
     <div className="content-area">
-      <AreaTop />
-      <AreaCards />
-      <AreaCharts />
-      <AreaTable />
+      <UserTable />
     </div>
   );
 };
