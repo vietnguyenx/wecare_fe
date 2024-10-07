@@ -6,17 +6,20 @@ import {
   Tooltip,
 } from "recharts";
 
-const AreaCard = ({ colors, percentFillValue, cardInfo }) => {
-  const filledValue = (percentFillValue / 100) * 360; // 360 degress for a full circle
+const AreaCard = ({ colors, percentFillValue, cardInfo, additionalData }) => {
+  const filledValue = (percentFillValue / 100) * 360; // 360 degrees for a full circle
   const remainedValue = 360 - filledValue;
 
-  const data = [
-    { name: "Free", value: remainedValue },
-    { name: "Premium", value: filledValue },
-  ];
+  // Dữ liệu cho các card
+  const data = additionalData 
+    ? additionalData // Sử dụng dữ liệu bổ sung nếu có
+    : [
+        { name: "Free", value: remainedValue },
+        { name: "Premium", value: filledValue },
+      ];
 
-  const renderTooltipContent = (value) => {
-    return `${(value / 360) * 100} %`;
+  const renderTooltipContent = (value, name) => {
+    return `${name}: ${(value / 360) * 100}%`; // Hiển thị phần trăm cho tooltip
   };
 
   return (
@@ -60,4 +63,5 @@ AreaCard.propTypes = {
   colors: PropTypes.array.isRequired,
   percentFillValue: PropTypes.number.isRequired,
   cardInfo: PropTypes.object.isRequired,
+  additionalData: PropTypes.array, // Thêm prop cho dữ liệu bổ sung
 };

@@ -12,7 +12,7 @@ import {
   MdOutlineSettings, 
   MdOutlineLogout 
 } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom"; // Thay đổi Link thành NavLink
 import "./Sidebar.scss";
 import { SidebarContext } from "../../context/SidebarContext";
 
@@ -60,44 +60,44 @@ const Sidebar = () => {
         <div className="sidebar-menu">
           <ul className="menu-list">
             <li className="menu-item">
-              <Link to="/" className="menu-link active">
+              <NavLink to="/dashboard" className="menu-link" activeClassName="active">
                 <span className="menu-link-icon">
                   <MdOutlineGridView size={18} />
                 </span>
                 <span className="menu-link-text">Trang chủ</span>
-              </Link>
+              </NavLink>
             </li>
             <li className="menu-item">
-              <Link to="/" className="menu-link">
+              <NavLink to="/user" className="menu-link" activeClassName="active">
                 <span className="menu-link-icon">
                   <MdPerson size={20} />
                 </span>
                 <span className="menu-link-text">Người dùng</span>
-              </Link>
+              </NavLink>
             </li>
             <li className="menu-item">
-              <Link to="/" className="menu-link">
+              <NavLink to="/dietitian" className="menu-link" activeClassName="active">
                 <span className="menu-link-icon">
                   <MdLocalHospital size={20} />
                 </span>
                 <span className="menu-link-text">Chuyên gia dinh dưỡng</span>
-              </Link>
+              </NavLink>
             </li>
             <li className="menu-item">
-              <Link to="/" className="menu-link">
+              <NavLink to="/menu" className="menu-link" activeClassName="active">
                 <span className="menu-link-icon">
                   <MdRestaurantMenu size={20} />
                 </span>
                 <span className="menu-link-text">Menu</span>
-              </Link>
+              </NavLink>
             </li>
             <li className="menu-item">
-              <Link to="/" className="menu-link">
+              <NavLink to="/" className="menu-link" activeClassName="active">
                 <span className="menu-link-icon">
                   <MdCategory size={20} />
                 </span>
                 <span className="menu-link-text">Danh mục</span>
-              </Link>
+              </NavLink>
             </li>
           </ul>
         </div>
@@ -105,20 +105,20 @@ const Sidebar = () => {
         <div className="sidebar-menu sidebar-menu2">
           <ul className="menu-list">
             <li className="menu-item">
-              <Link to="/" className="menu-link">
+              <NavLink to="/" className="menu-link" activeClassName="active">
                 <span className="menu-link-icon">
                   <MdOutlineSettings size={20} />
                 </span>
                 <span className="menu-link-text">Settings</span>
-              </Link>
+              </NavLink>
             </li>
             <li className="menu-item">
-              <Link to="/" className="menu-link">
+              <NavLink to="/" className="menu-link" activeClassName="active">
                 <span className="menu-link-icon">
                   <MdOutlineLogout size={20} />
                 </span>
                 <span className="menu-link-text">Logout</span>
-              </Link>
+              </NavLink>
             </li>
           </ul>
         </div>

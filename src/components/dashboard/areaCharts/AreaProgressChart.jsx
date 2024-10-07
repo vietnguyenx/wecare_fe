@@ -30,7 +30,7 @@ const AreaProgressChart = () => {
   return (
     <div className="progress-bar">
       <div className="progress-bar-info">
-        <h4 className="progress-bar-title">Most Sold Items</h4>
+        <h4 className="progress-bar-title">Menu được dùng nhiều nhất</h4>
       </div>
       <div className="progress-bar-list">
         {data?.map((progressbar) => {

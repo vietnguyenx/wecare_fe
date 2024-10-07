@@ -5,40 +5,48 @@ const AreaCards = () => {
   return (
     <section className="content-area-cards">
       <AreaCard
-        colors={["#e4e8ef", "#475be8"]}
-        percentFillValue={80}
+        colors={["#e4e8ef", "#f29a2e"]}
+        percentFillValue={80} // 80% cho Premium
         cardInfo={{
-          title: "Lượt nâng cấp",
-          value: "120",
+          title: "Lượt truy cập",
+          value: "0",
         }}
       />
       <AreaCard
-        colors={["#e4e8ef", "#4ce13f"]}
+        colors={["#e4e8ef", "#f29a2e"]}
         percentFillValue={50}
         cardInfo={{
           title: "Doanh thu",
-          value: "$8.2K",
+          value: "150",
         }}
       />
       <AreaCard
         colors={["#e4e8ef", "#f29a2e"]}
-        percentFillValue={40}
+        percentFillValue={60} // 60% cho Premium
         cardInfo={{
-          title: "Khách hàng mới",
-          value: "154",
+          title: "Người dùng Premium",
+          value: "80",
         }}
       />
       <AreaCard
         colors={["#e4e8ef", "#f29a2e"]}
-        percentFillValue={40}
+        additionalData={[
+          { name: "Gout", value: 20 }, // Giá trị cho Gout
+          { name: "Diabetes", value: 80 }, // Giá trị cho Diabetes
+        ]}
+        percentFillValue={100} // 100% cho Gout và Diabetes
         cardInfo={{
           title: "Xu hướng bệnh",
-          value: "Gout",
+          value: "Tiểu đường",
         }}
       />
       <AreaCard
         colors={["#e4e8ef", "#f29a2e"]}
-        percentFillValue={40}
+        additionalData={[
+          { name: "Gout", value: 50 }, // Giá trị cho Gout
+          { name: "Diabetes", value: 50 }, // Giá trị cho Diabetes
+        ]}
+        percentFillValue={100} // 100% cho Gout và Diabetes
         cardInfo={{
           title: "Tổng số thực đơn",
           value: "2935",
