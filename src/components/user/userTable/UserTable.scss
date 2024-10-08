@@ -67,13 +67,13 @@
         text-align: center;
       }
 
-      .dt-status {
+      .dt-userType {
         display: flex;
         align-items: center;
         justify-content: flex-start;
         column-gap: 6px;
 
-        .dt-status-dot {
+        .dt-userType-dot {
           width: 8px;
           height: 8px;
           border-radius: 100%;
@@ -82,11 +82,11 @@
             background-color: var(--orange-color);
           }
           &.dot-free {
-            background-color: var(--blue-color);
+            background-color: #808080;
           }
         }
 
-        .dt-status-text {
+        .dt-userType-text {
           text-transform: capitalize;
         }
       }
@@ -161,7 +161,7 @@
     justify-content: space-between; /* Đưa các phần tử ra hai bên */
     
     .create-user-button {
-      background-color: #FF8718;
+      background-color: #4CAF4F; 
       color: white;
       border: none;
       padding: 15px 15px;
@@ -171,7 +171,7 @@
       transition: background-color 0.3s;
   
       &:hover {
-        background-color: #4CAF4F;
+        background-color: #FF8718;
       }
     }
   }

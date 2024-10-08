@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import UserTableAction from "./UserTableAction";
 import { fetchAllUsers } from "../../../services/userService"; // Sử dụng dịch vụ
+import UserModal from "../userModal/UserModal"; // Đường dẫn tới UserModal
 import "./UserTable.scss";
 
 const TABLE_HEADS = [
@@ -16,11 +17,12 @@ const TABLE_HEADS = [
   "Chức năng",
   "Ngày tạo",
   "Trạng thái",
-  "Action",
+  "Thao tác",
 ];
 
 const UserTable = () => {
   const [tableData, setTableData] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,7 +46,7 @@ const UserTable = () => {
             isDeleted: user.isDeleted ? "Deleted" : "Active", // Hiển thị trạng thái
           }));
 
-        setTableData(formattedData); // Lưu tất cả dữ liệu vào state
+        setTableData(formattedData); 
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -53,18 +55,36 @@ const UserTable = () => {
     fetchData();
   }, []);
 
-  // Hàm để xử lý sự kiện nhấn nút "Tạo mới"
+  // Hàm để thêm người dùng mới vào danh sách
+  const addUser = (newUser) => {
+    const formattedUser = {
+      id: newUser.id,
+      username: newUser.username,
+      full_name: newUser.fullName,
+      email: newUser.email,
+      dob: newUser.dob,
+      address: newUser.address,
+      gender: newUser.gender === 0 ? "Male" : newUser.gender === 1 ? "Female" : "Other",
+      phone: newUser.phone,
+      userType: newUser.userType === 0 ? "Free" : "Premium",
+      diseaseType: newUser.diseaseType === 0 ? "Diabetes" : newUser.diseaseType === 1 ? "Gout" : "Both",
+      userRole: newUser.userRole === 0 ? "Admin" : newUser.userRole === 1 ? "Staff" : "User",
+      createDate: new Date().toLocaleDateString(), // Ngày tạo là ngày hiện tại
+      isDeleted: newUser.isDeleted ? "Deleted" : "Active",
+    };
+
+    // Cập nhật bảng với người dùng mới
+    setTableData((prev) => [formattedUser, ...prev]);
+  };
+
   const handleCreateUser = () => {
-    // Chuyển hướng hoặc mở modal để thêm người dùng mới
-    console.log("Tạo mới người dùng");
-    // Có thể mở modal hoặc redirect đến một trang khác
+    setIsModalOpen(true); // Mở modal để thêm người dùng mới
   };
 
   return (
     <section className="content-user-table">
       <div className="data-table-info">
         <h4 className="data-table-title">Danh sách người dùng</h4>
-        {/* Nút Tạo mới người dùng */}
         <button className="create-user-button" onClick={handleCreateUser}>
           Tạo mới người dùng
         </button>
@@ -89,21 +109,12 @@ const UserTable = () => {
                 <td>{dataItem.gender}</td>
                 <td>{dataItem.phone}</td>
                 <td>
-                  <div className="dt-status">
-                    <span
-                      className={`dt-status-dot dot-${dataItem.userType.toLowerCase()}`}
-                    ></span>
-                    <span className="dt-status-text">{dataItem.userType}</span>
+                  <div className="dt-userType">
+                    <span className={`dt-userType-dot dot-${dataItem.userType.toLowerCase()}`}></span>
+                    <span className="dt-userType-text">{dataItem.userType}</span>
                   </div>
                 </td>
-                <td>
-                  <div className="dt-diseaseType">
-                    <span
-                      className={`dt-diseaseType-dot dot-${dataItem.diseaseType.toLowerCase()}`}
-                    ></span>
-                    <span className="dt-diseaseType-text">{dataItem.diseaseType}</span>
-                  </div>
-                </td>
+                <td>{dataItem.diseaseType}</td>
                 <td>{dataItem.userRole}</td>
                 <td>{dataItem.createDate}</td>
                 <td>{dataItem.isDeleted}</td>
@@ -115,6 +126,9 @@ const UserTable = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Modal tạo người dùng mới */}
+      {isModalOpen && <UserModal onClose={() => setIsModalOpen(false)} onUserCreated={addUser} />}
     </section>
   );
 };

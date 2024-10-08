@@ -1,12 +1,11 @@
-import { AreaCards, AreaCharts, AreaTable, AreaTop } from "../../components";
+import { MenuTable } from "../../components";
+
 
 const Menu = () => {
   return (
     <div className="content-area">
-      <AreaTop />
-      <AreaCards />
-      <AreaCharts />
-      <AreaTable />
+
+      <MenuTable />
     </div>
   );
 };

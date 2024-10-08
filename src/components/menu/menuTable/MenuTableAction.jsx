@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { Link } from "react-router-dom";
 
-const UserTableAction = () => {
+const MenuTableAction = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const handleDropdown = () => {
     setShowDropdown(!showDropdown);
@@ -52,4 +52,4 @@ const UserTableAction = () => {
   );
 };
 
-export default UserTableAction;
+export default MenuTableAction;

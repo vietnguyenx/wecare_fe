@@ -1,12 +1,9 @@
-import { AreaCards, AreaCharts, AreaTable, AreaTop } from "../../components";
+import { DietitianTable } from "../../components";
 
 const Dietitian = () => {
   return (
     <div className="content-area">
-      <AreaTop />
-      <AreaCards />
-      <AreaCharts />
-      <AreaTable />
+      <DietitianTable />
     </div>
   );
 };

@@ -1,10 +1,25 @@
 // src/services/userService.js
-const API_URL = "https://localhost:7999/api/user";
+const API_URL = "https://wecareexe201.azurewebsites.net/api/user";
 
 export const fetchAllUsers = async (limit = 10, sort = "desc") => {
   const response = await fetch(`${API_URL}/get-all?limit=${limit}&sort=${sort}`);
   if (!response.ok) {
     throw new Error("Failed to fetch data");
+  }
+  return response.json(); 
+};
+
+export const createUser = async (userData) => {
+  const response = await fetch(`${API_URL}/add`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(userData), 
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to create user");
   }
   return response.json();
 };
