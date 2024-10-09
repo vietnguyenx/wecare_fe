@@ -8,5 +8,7 @@ export { default as UserTable } from "./user/userTable/UserTable";
 export { default as UserModal } from "./user/userModal/UserModal";
 
 export { default as DietitianTable } from "./dietitian/dietitianTable/DietitianTable";
+export { default as DietitianModal } from "./dietitian/dietitianModal/DietitianModal";
 
 export { default as MenuTable } from "./menu/menuTable/MenuTable";
+// export { default as MenuModal } from "./menu/menuModal/MenuModal";

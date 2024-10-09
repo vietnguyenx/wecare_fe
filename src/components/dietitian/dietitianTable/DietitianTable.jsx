@@ -1,6 +1,8 @@
+// dietitianTable.jsx
 import React, { useEffect, useState } from "react";
-import DietitianTableAction from "./DietitianTableAction"; // Tùy chỉnh cho dietitian
-import { fetchAllDietitians } from "../../../services/dietitianService"; // Gọi API từ dietitianService
+import DietitianTableAction from "./DietitianTableAction"; // Add action component for dietitian
+import { fetchAllDietitians, createDietitian } from "../../../services/dietitianService";
+import DietitianModal from "../dietitianModal/DietitianModal"; // Import the modal
 import "./DietitianTable.scss";
 
 const TABLE_HEADS = [
@@ -10,29 +12,30 @@ const TABLE_HEADS = [
   "Chuyên môn",
   "Ngày tạo",
   "Trạng thái",
-  "Action",
+  "Thao tác",
 ];
 
 const DietitianTable = () => {
   const [tableData, setTableData] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchAllDietitians(); // Gọi API để lấy danh sách dietitian
+        const data = await fetchAllDietitians(); // Fetch dietitian data
         const formattedData = data.results
-          .sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate)) // Sắp xếp theo createdDate
+          .sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate))
           .map((dietitian) => ({
             id: dietitian.id,
             name: dietitian.name,
             email: dietitian.email,
             phone: dietitian.phone,
             specialization: dietitian.specialization,
-            createDate: new Date(dietitian.createdDate).toLocaleDateString(), // Định dạng ngày tạo
-            isDeleted: dietitian.isDeleted ? "Deleted" : "Active", // Hiển thị trạng thái
+            createDate: new Date(dietitian.createdDate).toLocaleDateString(),
+            isDeleted: dietitian.isDeleted ? "Deleted" : "Active",
           }));
 
-        setTableData(formattedData); 
+        setTableData(formattedData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -41,17 +44,36 @@ const DietitianTable = () => {
     fetchData();
   }, []);
 
-  // Hàm để xử lý sự kiện nhấn nút "Tạo mới"
+  const addDietitian = (newDietitian) => {
+    const formattedDietitian = {
+      id: newDietitian.id,
+      name: newDietitian.name,
+      email: newDietitian.email,
+      phone: newDietitian.phone,
+      specialization: newDietitian.specialization,
+      createDate: new Date().toLocaleDateString(),
+      isDeleted: newDietitian.isDeleted ? "Deleted" : "Active",
+    };
+
+    setTableData((prev) => [formattedDietitian, ...prev]);
+  };
+
   const handleCreateDietitian = () => {
-    console.log("Tạo mới chuyên gia dinh dưỡng");
-    // Có thể mở modal hoặc redirect đến một trang khác
+    setIsModalOpen(true); // Open the modal for creating a new dietitian
+  };
+
+  const handleDietitianDeleted = (id) => {
+    setTableData((prev) => 
+      prev.map((dietitian) =>
+        dietitian.id === id ? { ...dietitian, isDeleted: "Deleted" } : dietitian
+      )
+    );
   };
 
   return (
     <section className="content-dietitian-table">
       <div className="data-table-info">
         <h4 className="data-table-title">Danh sách chuyên gia dinh dưỡng</h4>
-        {/* Nút Tạo mới chuyên gia dinh dưỡng */}
         <button className="create-dietitian-button" onClick={handleCreateDietitian}>
           Tạo mới chuyên gia dinh dưỡng
         </button>
@@ -75,13 +97,20 @@ const DietitianTable = () => {
                 <td>{dataItem.createDate}</td>
                 <td>{dataItem.isDeleted}</td>
                 <td className="dt-cell-action">
-                  <DietitianTableAction />
+                  <DietitianTableAction 
+                    dietitianId={dataItem.id} 
+                    name={dataItem.name} // Truyền tên vào đây
+                    onDietitianDeleted={handleDietitianDeleted} 
+                  />
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+
+      {/* Modal to create a new dietitian */}
+      {isModalOpen && <DietitianModal onClose={() => setIsModalOpen(false)} onDietitianCreated={addDietitian} />}
     </section>
   );
 };
