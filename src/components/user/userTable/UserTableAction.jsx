@@ -1,9 +1,13 @@
+// userTableAction.jsx
 import { useEffect, useRef, useState } from "react";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { Link } from "react-router-dom";
+import { deleteUser } from "../../../services/userService";
 
-const UserTableAction = () => {
+const UserTableAction = ({ userId, onUserDeleted, username }) => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+
   const handleDropdown = () => {
     setShowDropdown(!showDropdown);
   };
@@ -19,9 +23,27 @@ const UserTableAction = () => {
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.addEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const handleDeleteUser = async () => {
+    setShowConfirm(true);
+  };
+
+  const confirmDeleteUser = async () => {
+    try {
+      const result = await deleteUser(userId);
+      if (result.isSuccess) {
+        onUserDeleted(userId);
+        alert("Người dùng đã được xóa thành công!");
+      }
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      alert("Có lỗi xảy ra khi xóa người dùng.");
+    }
+    setShowConfirm(false);
+  };
 
   return (
     <>
@@ -40,14 +62,23 @@ const UserTableAction = () => {
                 </Link>
               </li>
               <li className="dropdown-menu-item">
-                <Link to="/view" className="dropdown-menu-link">
+                <button onClick={handleDeleteUser} className="dropdown-menu-link">
                   Delete
-                </Link>
+                </button>
               </li>
             </ul>
           </div>
         )}
       </button>
+
+      {/* Hộp thoại xác nhận xóa */}
+      {showConfirm && (
+        <div className="confirm-dialog">
+          <p>Bạn có chắc muốn xoá {username}?</p>
+          <button onClick={confirmDeleteUser} className="confirm-button">Xóa</button>
+          <button onClick={() => setShowConfirm(false)} className="cancel-button">Hủy</button>
+        </div>
+      )}
     </>
   );
 };

@@ -119,7 +119,18 @@ const UserTable = () => {
                 <td>{dataItem.createDate}</td>
                 <td>{dataItem.isDeleted}</td>
                 <td className="dt-cell-action">
-                  <UserTableAction />
+                  <UserTableAction 
+                    userId={dataItem.id} 
+                    username={dataItem.username} // Truyền username vào đây
+                    onUserDeleted={(id) => {
+                      // Cập nhật trạng thái người dùng thành "Deleted"
+                      setTableData((prev) => 
+                        prev.map((user) =>
+                          user.id === id ? { ...user, isDeleted: "Deleted" } : user
+                        )
+                      ); 
+                    }} 
+                  />
                 </td>
               </tr>
             ))}
