@@ -80,7 +80,7 @@
             background-color: var(--orange-color);
           }
           &.dot-free {
-            background-color: var(--green-color);
+            background-color: #808080;
           }
         }
 
@@ -89,29 +89,6 @@
         }
       }
 
-      .dt-diseaseType {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        column-gap: 6px;
-
-        .dt-diseaseType-dot {
-          width: 8px;
-          height: 8px;
-          border-radius: 100%;
-
-          &.dot-diabetes {
-            background-color: var(--red-color);
-          }
-          &.dot-gout {
-            background-color: var(--blue-color);
-          }
-        }
-
-        .dt-diseaseType-text {
-          text-transform: capitalize;
-        }
-      }
     }
   }
 

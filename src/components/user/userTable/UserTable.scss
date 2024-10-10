@@ -90,33 +90,6 @@
           text-transform: capitalize;
         }
       }
-
-      .dt-diseaseType {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        column-gap: 6px;
-
-        .dt-diseaseType-dot {
-          width: 8px;
-          height: 8px;
-          border-radius: 100%;
-
-          &.dot-diabetes {
-            background-color: var(--red-color);
-          }
-          &.dot-gout {
-            background-color: var(--blue-color);
-          }
-          &.dot-both {
-            background-color: var(--orange-color);
-          }
-        }
-
-        .dt-diseaseType-text {
-          text-transform: capitalize;
-        }
-      }
     }
   }
 
@@ -155,7 +128,7 @@
     &:hover {
       opacity: 0.9; // Giảm độ mờ
       background-color: #4CAF4F;
-      border-radius: 10px; // Bo góc nhẹ cho nút
+      border-radius: 10px; // Bo góc nhẹ cho nút 
     }
   }
 

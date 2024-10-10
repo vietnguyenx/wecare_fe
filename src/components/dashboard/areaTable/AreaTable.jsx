@@ -30,7 +30,7 @@ const AreaTable = () => {
             email: user.email,
             phone: user.phone,
             userType: user.userType === 1 ? "premium" : "free", // Đảm bảo đúng điều kiện
-            diseaseType: user.diseaseType === 1 ? "gout" : "diabetes", // Đảm bảo đúng điều kiện
+            diseaseType: user.diseaseType === 1 ? "Gout" : "Diabetes", // Đảm bảo đúng điều kiện
           }));
 
         setTableData(formattedData.slice(0, 10)); // Chỉ lấy 10 kết quả
@@ -71,14 +71,7 @@ const AreaTable = () => {
                     <span className="dt-status-text">{dataItem.userType}</span>
                   </div>
                 </td>
-                <td>
-                  <div className="dt-diseaseType">
-                    <span
-                      className={`dt-diseaseType-dot dot-${dataItem.diseaseType}`}
-                    ></span>
-                    <span className="dt-diseaseType-text">{dataItem.diseaseType}</span>
-                  </div>
-                </td>
+                <td>{dataItem.diseaseType}</td>
                 <td className="dt-cell-action">
                   <AreaTableAction />
                 </td>
