@@ -61,15 +61,15 @@ const AreaCards = () => {
 
   // Prepare data for disease trends pie chart
   const diseaseData = [
-    { name: "Diabetes", value: diseaseCounts.diabetes, color: "#FF8718" },
     { name: "Gout", value: diseaseCounts.gout, color: "#4CAF4F" },
+    { name: "Diabetes", value: diseaseCounts.diabetes, color: "#FF8718" },
     { name: "Both", value: diseaseCounts.both, color: "#e4e8ef" },
   ];
 
   // Prepare data for menu trends
   const menuData = [
-    { name: "Diabetes", value: menuCounts.diabetes, color: "#4CAF4F" },
-    { name: "Gout", value: menuCounts.gout, color: "#FF8718" },
+    { name: "Gout", value: menuCounts.gout, color: "#4CAF4F" },
+    { name: "Diabetes", value: menuCounts.diabetes, color: "#FF8718" },
     { name: "Both", value: menuCounts.both, color: "#e4e8ef" },
   ];
 
@@ -116,8 +116,8 @@ const AreaCards = () => {
       <AreaCard
         colors={["#4CAF4F","#FF8718","#e4e8ef"]}
         additionalData={[
-          { name: "Diabetes", value: menuCounts.diabetes },
           { name: "Gout", value: menuCounts.gout },
+          { name: "Diabetes", value: menuCounts.diabetes },
           { name: "Both", value: menuCounts.both },
         ]}
         percentFillValue={100}

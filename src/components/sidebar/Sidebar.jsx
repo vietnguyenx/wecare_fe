@@ -26,7 +26,7 @@ const Sidebar = () => {
     if (
       navbarRef.current &&
       !navbarRef.current.contains(event.target) &&
-      event.target.className !== "sidebar-oepn-btn"
+      event.target.className !== "sidebar-open-btn"
     ) {
       closeSidebar();
     }
@@ -92,7 +92,7 @@ const Sidebar = () => {
               </NavLink>
             </li>
             <li className="menu-item">
-              <NavLink to="/" className="menu-link" activeClassName="active">
+              <NavLink to="/category" className="menu-link" activeClassName="active">
                 <span className="menu-link-icon">
                   <MdCategory size={20} />
                 </span>
@@ -105,19 +105,19 @@ const Sidebar = () => {
         <div className="sidebar-menu sidebar-menu2">
           <ul className="menu-list">
             <li className="menu-item">
-              <NavLink to="/" className="menu-link" activeClassName="active">
+              <NavLink to="/settings" className="menu-link" activeClassName="active">
                 <span className="menu-link-icon">
                   <MdOutlineSettings size={20} />
                 </span>
-                <span className="menu-link-text">Settings</span>
+                <span className="menu-link-text">Cài đặt</span>
               </NavLink>
             </li>
             <li className="menu-item">
-              <NavLink to="/" className="menu-link" activeClassName="active">
+              <NavLink to="/logout" className="menu-link" activeClassName="active">
                 <span className="menu-link-icon">
                   <MdOutlineLogout size={20} />
                 </span>
-                <span className="menu-link-text">Logout</span>
+                <span className="menu-link-text">Đăng xuất</span>
               </NavLink>
             </li>
           </ul>

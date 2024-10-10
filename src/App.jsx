@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import "./App.scss";
 import { ThemeContext } from "./context/ThemeContext";
 import { DARK_THEME, LIGHT_THEME } from "./constants/themeConstants";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"; // import Navigate
 import MoonIcon from "./assets/icons/moon.svg";
 import SunIcon from "./assets/icons/sun.svg";
 import BaseLayout from "./layout/BaseLayout";
@@ -25,6 +25,7 @@ function App() {
       <Router>
         <Routes>
           <Route element={<BaseLayout />}>
+            <Route path="/" element={<Navigate to="/dashboard" />} /> {/* Redirect to /dashboard */}
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/user" element={<User />} />
             <Route path="/dietitian" element={<Dietitian />} />
