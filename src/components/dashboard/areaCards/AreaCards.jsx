@@ -6,7 +6,7 @@ const AreaCards = () => {
     <section className="content-area-cards">
       <AreaCard
         colors={["#e4e8ef", "#f29a2e"]}
-        percentFillValue={80} // 80% cho Premium
+        percentFillValue={0 } // 80% cho Premium
         cardInfo={{
           title: "Lượt truy cập",
           value: "0",
@@ -14,15 +14,15 @@ const AreaCards = () => {
       />
       <AreaCard
         colors={["#e4e8ef", "#f29a2e"]}
-        percentFillValue={50}
+        percentFillValue={0}
         cardInfo={{
           title: "Doanh thu",
-          value: "150",
+          value: "0",
         }}
       />
       <AreaCard
         colors={["#e4e8ef", "#f29a2e"]}
-        percentFillValue={60} // 60% cho Premium
+        percentFillValue={55} // 60% cho Premium
         cardInfo={{
           title: "Người dùng Premium",
           value: "80",
