@@ -10,16 +10,19 @@ const AreaCard = ({ colors, percentFillValue, cardInfo, additionalData }) => {
   const filledValue = (percentFillValue / 100) * 360; // 360 degrees for a full circle
   const remainedValue = 360 - filledValue;
 
-  // Dữ liệu cho các card
+  // Data for the card
   const data = additionalData 
-    ? additionalData // Sử dụng dữ liệu bổ sung nếu có
+    ? additionalData // Use additional data if available
     : [
         { name: "Free", value: remainedValue },
         { name: "Premium", value: filledValue },
       ];
 
+  // Function to format tooltip content
   const renderTooltipContent = (value, name) => {
-    return `${name}: ${(value / 360) * 100}%`; // Hiển thị phần trăm cho tooltip
+    const totalValue = data.reduce((sum, entry) => sum + entry.value, 0); // Calculate total value
+    const percentage = ((value / totalValue) * 100).toFixed(2); // Calculate percentage
+    return `${name}: ${percentage}%`; // Display percentage in tooltip
   };
 
   return (
@@ -40,7 +43,7 @@ const AreaCard = ({ colors, percentFillValue, cardInfo, additionalData }) => {
             paddingAngle={0}
             dataKey="value"
             startAngle={-270}
-            endAngle={150}
+            endAngle={90} // Changed from 150 to 90 for better visualization
             stroke="none"
           >
             {data.map((entry, index) => (
@@ -50,18 +53,21 @@ const AreaCard = ({ colors, percentFillValue, cardInfo, additionalData }) => {
               />
             ))}
           </Pie>
-          <Tooltip formatter={renderTooltipContent} />
+          <Tooltip 
+            formatter={(value, name) => renderTooltipContent(value, name)} 
+            cursor={false}
+          />
         </PieChart>
       </div>
     </div>
   );
 };
 
-export default AreaCard;
-
 AreaCard.propTypes = {
   colors: PropTypes.array.isRequired,
   percentFillValue: PropTypes.number.isRequired,
   cardInfo: PropTypes.object.isRequired,
-  additionalData: PropTypes.array, // Thêm prop cho dữ liệu bổ sung
+  additionalData: PropTypes.array, // Add prop for additional data
 };
+
+export default AreaCard;
