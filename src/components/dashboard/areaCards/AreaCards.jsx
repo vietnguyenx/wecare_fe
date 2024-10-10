@@ -10,12 +10,20 @@ const AreaCards = () => {
   const [premiumUsersCount, setPremiumUsersCount] = useState(0);
   const [diseaseCounts, setDiseaseCounts] = useState({ diabetes: 0, gout: 0, both: 0 });
   const [menuCounts, setMenuCounts] = useState({ gout: 0, diabetes: 0, both: 0 }); // Include both in menu counts
+  const [isDataReady, setIsDataReady] = useState(false); // New state to track if data is ready
 
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetchAllUsers(100);
-        const users = response.results;
+        // Wait for both fetches to complete
+        const [userResponse, menuResponse] = await Promise.all([
+          fetchAllUsers(100), 
+          fetchAllMenus(100)
+        ]);
+
+        // Extract users and menus data
+        const users = userResponse.results;
+        const menus = menuResponse.results;
 
         // Count free and premium users
         const freeCount = users.filter(user => user.userType === 0).length;
@@ -26,33 +34,26 @@ const AreaCards = () => {
         const goutCount = users.filter(user => user.diseaseType === 1).length;
         const bothCount = users.filter(user => user.diseaseType === 2).length;
 
+        // Count suitableFor categories in menus
+        const goutMenuCount = menus.filter(menu => menu.suitableFor === 1).length;
+        const diabetesMenuCount = menus.filter(menu => menu.suitableFor === 0).length;
+        const bothMenuCount = menus.filter(menu => menu.suitableFor === 2).length;
+
+        // Update state with users and menus data
         setTotalUsers(users.length);
         setFreeUsersCount(freeCount);
         setPremiumUsersCount(premiumCount);
         setDiseaseCounts({ diabetes: diabetesCount, gout: goutCount, both: bothCount });
+        setMenuCounts({ gout: goutMenuCount, diabetes: diabetesMenuCount, both: bothMenuCount });
+
+        // Mark data as ready
+        setIsDataReady(true);
       } catch (error) {
-        console.error("Failed to fetch users:", error);
+        console.error("Failed to fetch data:", error);
       }
     };
 
-    const fetchMenus = async () => {
-      try {
-        const response = await fetchAllMenus(100); // Fetch menu data with limit
-        const menus = response.results; // Get menus array
-
-        // Count suitableFor categories
-        const goutCount = menus.filter(menu => menu.suitableFor === 1).length;
-        const diabetesCount = menus.filter(menu => menu.suitableFor === 0).length;
-        const bothCount = menus.filter(menu => menu.suitableFor === 2).length; // Count for both
-
-        setMenuCounts({ gout: goutCount, diabetes: diabetesCount, both: bothCount }); // Update menu counts
-      } catch (error) {
-        console.error("Failed to fetch menus:", error);
-      }
-    };
-
-    fetchUsers();
-    fetchMenus(); // Call the fetchMenus function
+    fetchData(); // Call the function
   }, []);
 
   const totalCount = freeUsersCount + premiumUsersCount;
@@ -72,6 +73,11 @@ const AreaCards = () => {
     { name: "Diabetes", value: menuCounts.diabetes, color: "#FF8718" },
     { name: "Both", value: menuCounts.both, color: "#e4e8ef" },
   ];
+
+  // Render only when data is ready
+  if (!isDataReady) {
+    return <div>Loading...</div>; // Or you can return a loading spinner
+  }
 
   return (
     <section className="content-area-cards">
