@@ -109,6 +109,68 @@
     }
   }
 
+  .logout-button {
+    width: 100%;
+    height: 60px; 
+    font-size: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    column-gap: 11px;
+    padding: 12px;
+    border-radius: 12px;
+    color: var(--side-text-color);
+    transition: var(--default-transition);
+    background: none; // Loại bỏ nền của button
+    border: none; // Loại bỏ đường viền của button
+    cursor: pointer; // Thêm con trỏ khi di chuột
+  
+    &:hover {
+      background-color: var(--side-link-hover-color); // Thêm hiệu ứng hover giống như menu
+    }
+  }
+
+  .logout-confirmation {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    border: 5px solid green;
+    border-radius: 15px;
+  
+    p {
+      margin-bottom: 10px; 
+    }
+  
+    // Sử dụng flexbox để căn giữa các nút
+    .button-container {
+      display: flex; // Thiết lập flexbox
+      justify-content: center; // Căn giữa theo chiều ngang
+      margin-top: 20px; // Khoảng cách giữa paragraph và button
+  
+      button {
+        margin-right: 10px; // Khoảng cách giữa các nút
+        background-color: #4CAF4F; /* Màu nền nút */
+        color: white; /* Màu chữ */
+        border: none; /* Không có viền */
+        padding: 10px 15px; /* Padding cho nút */
+        border-radius: 5px; /* Bo góc nút */
+        cursor: pointer; /* Con trỏ khi hover */
+        transition: background-color 0.3s; /* Hiệu ứng chuyển màu */
+      }
+  
+      // Đảm bảo nút cuối cùng không có margin-right
+      button:last-child {
+        margin-right: 0; // Xóa margin cho nút cuối
+      }
+    }
+  }
+  
+
   .menu-link{
     width: 100%;
     height: 48px;

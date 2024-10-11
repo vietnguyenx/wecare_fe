@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
 import { LIGHT_THEME } from "../../constants/themeConstants";
 import WeCareLogo from "../../assets/images/wecare_logo_size36.png"; // Thêm đường dẫn tới ảnh mới
@@ -12,7 +12,7 @@ import {
   MdOutlineSettings, 
   MdOutlineLogout 
 } from "react-icons/md";
-import { NavLink } from "react-router-dom"; // Thay đổi Link thành NavLink
+import { NavLink, useNavigate } from "react-router-dom"; // Thay đổi Link thành NavLink
 import "./Sidebar.scss";
 import { SidebarContext } from "../../context/SidebarContext";
 
@@ -20,8 +20,12 @@ const Sidebar = () => {
   const { theme } = useContext(ThemeContext);
   const { isSidebarOpen, closeSidebar } = useContext(SidebarContext);
   const navbarRef = useRef(null);
+  const navigate = useNavigate(); // Khởi tạo useNavigate
+  
+  // State để kiểm tra có hiển thị thông báo xác nhận không
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
-  // closing the navbar when clicked outside the sidebar area
+  // Closing the navbar when clicked outside the sidebar area
   const handleClickOutside = (event) => {
     if (
       navbarRef.current &&
@@ -38,6 +42,29 @@ const Sidebar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  // Hàm xử lý hiển thị thông báo xác nhận
+  const handleShowLogoutConfirm = () => {
+    setShowLogoutConfirm(true);
+  };
+
+  // Hàm xử lý đăng xuất
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn"); // Xóa thông tin đăng nhập
+    localStorage.removeItem("userRole"); // Xóa thông tin vai trò
+    navigate("/login"); // Điều hướng về trang đăng nhập
+  };
+
+  // Hàm xử lý xác nhận đăng xuất
+  const confirmLogout = () => {
+    handleLogout();
+    setShowLogoutConfirm(false); // Ẩn thông báo xác nhận
+  };
+
+  // Hàm xử lý hủy bỏ đăng xuất
+  const cancelLogout = () => {
+    setShowLogoutConfirm(false); // Ẩn thông báo xác nhận
+  };
 
   return (
     <nav
@@ -113,16 +140,30 @@ const Sidebar = () => {
               </NavLink>
             </li>
             <li className="menu-item">
-              <NavLink to="/logout" className="menu-link" activeClassName="active">
+              <button 
+                className="menu-link logout-button" // Thêm class mới
+                onClick={handleShowLogoutConfirm} // Thay đổi hàm gọi
+              >
                 <span className="menu-link-icon">
                   <MdOutlineLogout size={20} />
                 </span>
                 <span className="menu-link-text">Đăng xuất</span>
-              </NavLink>
+              </button>
             </li>
           </ul>
         </div>
       </div>
+
+      {/* Thông báo xác nhận đăng xuất */}
+      {showLogoutConfirm && (
+        <div className="logout-confirmation">
+          <p>Bạn có chắc chắn muốn đăng xuất không?</p>
+          <div className="button-container">
+            <button onClick={confirmLogout}>Có</button>
+            <button onClick={cancelLogout}>Không</button>
+          </div>
+        </div>
+      )}
     </nav>
   );
 };
