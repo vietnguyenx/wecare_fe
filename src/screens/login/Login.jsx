@@ -1,12 +1,23 @@
-// src/screens/Login.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.scss"; // Import file CSS để định kiểu cho trang đăng nhập
 
-const Login = ({ setIsLoggedIn, setUserRole }) => { // Nhận setIsLoggedIn và setUserRole như props
+const Login = ({ setIsLoggedIn, setUserRole }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const savedUsername = localStorage.getItem("rememberedUsername");
+    const savedPassword = localStorage.getItem("rememberedPassword");
+
+    if (savedUsername && savedPassword) {
+      setUsername(savedUsername);
+      setPassword(savedPassword);
+      setRememberMe(true);
+    }
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -18,7 +29,7 @@ const Login = ({ setIsLoggedIn, setUserRole }) => { // Nhận setIsLoggedIn và 
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          usernameOrEmail: username, // Sử dụng username hoặc email
+          usernameOrEmail: username,
           password: password,
         }),
       });
@@ -28,25 +39,29 @@ const Login = ({ setIsLoggedIn, setUserRole }) => { // Nhận setIsLoggedIn và 
       }
 
       const data = await response.json();
+      const userRole = data.result.userRole;
 
-      // Lấy userRole từ data.result
-      const userRole = data.result.userRole; // Cập nhật để lấy từ data.result
-
-      // Lưu token hoặc thông tin người dùng nếu cần thiết
       localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("userRole", userRole); // Lưu userRole
+      localStorage.setItem("userRole", userRole);
 
-      // Cập nhật trạng thái đăng nhập và vai trò người dùng
+      if (rememberMe) {
+        localStorage.setItem("rememberedUsername", username);
+        localStorage.setItem("rememberedPassword", password);
+      } else {
+        localStorage.removeItem("rememberedUsername");
+        localStorage.removeItem("rememberedPassword");
+      }
+
       setIsLoggedIn(true);
       setUserRole(userRole);
 
       if (userRole === 0) {
-        navigate("/dashboard"); // Chuyển hướng đến dashboard nếu userRole là 0
+        navigate("/dashboard");
       } else {
-        alert("Bạn không được phép vào dashboard."); // Hiển thị thông báo nếu userRole khác 0
+        alert("Bạn không được phép vào dashboard.");
       }
     } catch (error) {
-      alert(error.message); // Hiển thị thông báo lỗi nếu có
+      alert(error.message);
     }
   };
 
@@ -56,7 +71,7 @@ const Login = ({ setIsLoggedIn, setUserRole }) => { // Nhận setIsLoggedIn và 
         <h2>Đăng Nhập</h2>
         <form onSubmit={handleLogin}>
           <div>
-            <label>Tên người dùng:</label>
+            <label>Tài khoản</label>
             <input
               type="text"
               value={username}
@@ -65,7 +80,7 @@ const Login = ({ setIsLoggedIn, setUserRole }) => { // Nhận setIsLoggedIn và 
             />
           </div>
           <div>
-            <label>Mật khẩu:</label>
+            <label>Mật khẩu</label>
             <input
               type="password"
               value={password}
@@ -73,8 +88,30 @@ const Login = ({ setIsLoggedIn, setUserRole }) => { // Nhận setIsLoggedIn và 
               required
             />
           </div>
+          <div className="remember-me-container">
+            <div className="remember-me">
+              <input
+                type="checkbox"
+                id="rememberMe"
+                checked={rememberMe}
+                onChange={() => setRememberMe(!rememberMe)}
+              />
+              <label htmlFor="rememberMe" className="custom-checkbox-label">
+                Ghi nhớ tôi
+              </label>
+            </div>
+            <a  
+              className="forgot-password-link"
+              onClick={(e) => e.stopPropagation()} // Ngăn sự kiện lan tới checkbox
+            >
+              Quên mật khẩu?
+            </a>
+          </div>
           <button type="submit">Đăng Nhập</button>
         </form>
+        <div className="signup-link">
+          <a>Chưa có tài khoản? Đăng ký ngay!</a>
+        </div>
       </div>
     </div>
   );

@@ -1,16 +1,16 @@
-// src/screens/Login.scss
 .login-background {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh; /* Chiều cao toàn màn hình */
-  background-image: url('path/to/your/background-image.jpg'); /* Đường dẫn đến ảnh nền */
+  background-image: url("../../assets/images/background_login.jpg"); /* Đường dẫn đến ảnh nền */
   background-size: cover; /* Làm cho ảnh nền phủ kín màn hình */
   background-position: center; /* Đặt ảnh ở giữa */
 }
 
 .login-container {
-  background-color: rgba(255, 255, 255, 0.8); /* Màu nền trắng với độ trong suốt */
+  background-color: rgba(255, 255, 255, 0.2); /* Màu nền trắng với độ trong suốt */
+  backdrop-filter: blur(10px); /* Làm mờ nền */
   padding: 20px;
   border-radius: 8px; /* Bo góc cho khung */
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Đổ bóng cho khung */
@@ -38,7 +38,7 @@
 .login-container button {
   width: 100%; /* Chiều rộng 100% cho nút */
   padding: 10px; /* Khoảng cách bên trong nút */
-  background-color: #007bff; /* Màu nền cho nút */
+  background-color: #4CAF4F; /* Màu nền cho nút */
   color: white; /* Màu chữ cho nút */
   border: none; /* Bỏ đường viền */
   border-radius: 4px; /* Bo góc cho nút */
@@ -46,5 +46,95 @@
 }
 
 .login-container button:hover {
-  background-color: #0056b3; /* Màu nền khi di chuột qua nút */
+  background-color: #FF8718; /* Màu nền khi di chuột qua nút */
+}
+
+.remember-me-container {
+  display: flex;
+  justify-content: space-between; /* Căn đều hai bên */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  margin-bottom: 15px;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center; /* Căn giữa theo chiều dọc */
+  position: relative; /* Đảm bảo không chồng lấn với đường dẫn */
+}
+
+.remember-me input[type="checkbox"] {
+  position: absolute;
+  opacity: 0; /* Ẩn checkbox thật */
+  cursor: pointer; /* Con trỏ chuột khi di chuột qua checkbox */
+}
+
+.custom-checkbox-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  padding-left: 25px; /* Đảm bảo có khoảng cách cho checkbox */
+  user-select: none; /* Ngăn việc chọn văn bản */
+}
+
+.custom-checkbox-label::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 15px;
+  height: 15px;
+  border: 2px solid #ccc;
+  border-radius: 4px; /* Bo góc checkbox */
+  background-color: transparent;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.remember-me input[type="checkbox"]:checked + .custom-checkbox-label::before {
+  background-color: #4CAF50; /* Màu nền khi được tick */
+  border-color: #4CAF50;
+}
+
+.custom-checkbox-label::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.remember-me input[type="checkbox"]:checked + .custom-checkbox-label::after {
+  opacity: 1;
+}
+
+.forgot-password-link {
+  color: blue; /* Màu cho đường dẫn */
+  text-decoration: none; /* Bỏ gạch chân */
+  font-size: 0.9em; /* Kích thước chữ nhỏ hơn một chút */
+}
+
+.forgot-password-link:hover {
+  text-decoration: underline; /* Gạch chân khi hover */
+}
+
+.signup-link {
+  text-align: center; /* Căn giữa cho đường dẫn */
+  margin-top: 15px; /* Khoảng cách trên */
+}
+
+.signup-link a {
+  color: blue; /* Màu cho đường dẫn */
+  text-decoration: none; /* Bỏ gạch chân */
+  font-size: 0.9em; /* Kích thước chữ nhỏ hơn một chút */
+}
+
+.signup-link a:hover {
+  text-decoration: underline; /* Gạch chân khi hover */
 }

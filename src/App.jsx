@@ -1,4 +1,3 @@
-// src/App.jsx
 import { useContext, useEffect, useState } from "react";
 import "./App.scss";
 import { ThemeContext } from "./context/ThemeContext";
@@ -8,11 +7,13 @@ import MoonIcon from "./assets/icons/moon.svg";
 import SunIcon from "./assets/icons/sun.svg";
 import BaseLayout from "./layout/BaseLayout";
 import { Dashboard, Dietitian, PageNotFound, User, Menu, Login } from "./screens";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // Nhập CSS của Toastify
 
 function App() {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("isLoggedIn") === "true");
-  const [userRole, setUserRole] = useState(parseInt(localStorage.getItem("userRole"), 10)); // Lấy userRole từ localStorage
+  const [userRole, setUserRole] = useState(parseInt(localStorage.getItem("userRole"), 10));
 
   useEffect(() => {
     if (theme === DARK_THEME) {
@@ -23,7 +24,6 @@ function App() {
   }, [theme]);
 
   useEffect(() => {
-    // Cập nhật lại trạng thái nếu có thay đổi trong localStorage
     const handleStorageChange = () => {
       setIsLoggedIn(localStorage.getItem("isLoggedIn") === "true");
       setUserRole(parseInt(localStorage.getItem("userRole"), 10));
@@ -35,6 +35,20 @@ function App() {
       window.removeEventListener("storage", handleStorageChange);
     };
   }, []);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      // Đặt thời gian đăng xuất tự động sau 1 phút (60 giây)
+      const timer = setTimeout(() => {
+        setIsLoggedIn(false);
+        localStorage.removeItem("isLoggedIn");
+        localStorage.removeItem("userRole");
+        toast.warn("Vui lòng đăng nhập lại để tiếp tục."); // Hiển thị thông báo
+      }, 600000); 
+
+      return () => clearTimeout(timer);
+    }
+  }, [isLoggedIn]);
 
   return (
     <>
@@ -55,6 +69,9 @@ function App() {
           <img className="theme-icon" src={theme === LIGHT_THEME ? SunIcon : MoonIcon} />
         </button>
       </Router>
+
+      {/* Thêm ToastContainer để hiển thị thông báo */}
+      <ToastContainer />
     </>
   );
 }
