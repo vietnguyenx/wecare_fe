@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   BarChart,
   Bar,
@@ -11,65 +11,60 @@ import {
 import { ThemeContext } from "../../../context/ThemeContext";
 import { FaArrowUpLong } from "react-icons/fa6";
 import { LIGHT_THEME } from "../../../constants/themeConstants";
+import { fetchAllUsers2 } from "../../../services/userService"; // Import user service
 import "./AreaCharts.scss";
-
-const data = [
-  {
-    month: "Jan",
-    loss: 70,
-    profit: 100,
-  },
-  {
-    month: "Feb",
-    loss: 55,
-    profit: 85,
-  },
-  {
-    month: "Mar",
-    loss: 35,
-    profit: 90,
-  },
-  {
-    month: "April",
-    loss: 90,
-    profit: 70,
-  },
-  {
-    month: "May",
-    loss: 55,
-    profit: 80,
-  },
-  {
-    month: "Jun",
-    loss: 30,
-    profit: 50,
-  },
-  {
-    month: "Jul",
-    loss: 32,
-    profit: 75,
-  },
-  {
-    month: "Aug",
-    loss: 62,
-    profit: 86,
-  },
-  {
-    month: "Sep",
-    loss: 55,
-    profit: 78,
-  },
-];
 
 const AreaBarChart = () => {
   const { theme } = useContext(ThemeContext);
+  const [monthlyRevenueData, setMonthlyRevenueData] = useState([]);
+
+  const revenueTarget = 1000000; // Mục tiêu doanh thu mỗi tháng là 50 triệu
+  const premiumUserPrice = 199000; // Giá của người dùng Premium
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userResponse = await fetchAllUsers2("desc");
+        const users = userResponse.results;
+
+        // Tạo đối tượng đếm doanh thu hàng tháng
+        const revenueByMonth = Array(12).fill(0);
+
+        // Tính toán doanh thu theo tháng
+        users.forEach(user => {
+          const createdDate = new Date(user.createdDate);
+          const month = createdDate.getMonth(); // Lấy tháng từ 0-11
+
+          if (user.userType === 1) { // Nếu là Premium user
+            revenueByMonth[month] += premiumUserPrice;
+          }
+        });
+
+        // Chuyển đổi dữ liệu thành định dạng cho biểu đồ
+        const chartData = revenueByMonth.map((revenue, index) => {
+          const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+          return {
+            month: monthNames[index],
+            revenue,
+            target: revenueTarget,
+          };
+        });
+
+        setMonthlyRevenueData(chartData);
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const formatTooltipValue = (value) => {
-    return `${value}k`;
+    return `${(value / 1000).toLocaleString()}k`;
   };
 
   const formatYAxisLabel = (value) => {
-    return `${value}k`;
+    return `${(value / 1000).toLocaleString()}k`;
   };
 
   const formatLegendValue = (value) => {
@@ -81,10 +76,10 @@ const AreaBarChart = () => {
       <div className="bar-chart-info">
         <h5 className="bar-chart-title">Doanh Thu Tài Khoản Premium</h5>
         <div className="chart-info-data">
-          <div className="info-data-value">$50.4K</div>
+          <div className="info-data-value">50.4K</div>
           <div className="info-data-text">
             <FaArrowUpLong />
-            <p>5% than last month.</p>
+            <p>5% so với tháng trước.</p>
           </div>
         </div>
       </div>
@@ -93,7 +88,7 @@ const AreaBarChart = () => {
           <BarChart
             width={500}
             height={200}
-            data={data}
+            data={monthlyRevenueData}
             margin={{
               top: 5,
               right: 5,
@@ -133,7 +128,8 @@ const AreaBarChart = () => {
               formatter={formatLegendValue}
             />
             <Bar
-              dataKey="profit"
+              dataKey="revenue"
+              name="Doanh thu"
               fill="#4CAF4F"
               activeBar={false}
               isAnimationActive={false}
@@ -141,8 +137,9 @@ const AreaBarChart = () => {
               radius={[4, 4, 4, 4]}
             />
             <Bar
-              dataKey="loss"
-              fill="#e3e7fc"
+              dataKey="target"
+              name="Mục tiêu"
+              fill="#FF8718"
               activeBar={false}
               isAnimationActive={false}
               barSize={24}

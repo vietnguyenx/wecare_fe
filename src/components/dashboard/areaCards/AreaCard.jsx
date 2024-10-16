@@ -10,9 +10,17 @@ const AreaCard = ({ colors, percentFillValue, cardInfo, additionalData }) => {
   const filledValue = (percentFillValue / 100) * 360; // 360 degrees for a full circle
   const remainedValue = 360 - filledValue;
 
-  // Data for the card
-  const data = additionalData 
-    ? additionalData // Use additional data if available
+  // Kiểm tra xem đây có phải là card doanh thu hay không (thông qua title)
+  const isRevenueCard = cardInfo.title === "Doanh thu";
+
+  // Nếu là card doanh thu, sử dụng dữ liệu riêng cho tooltip
+  const data = isRevenueCard
+    ? [
+        { name: "Mục tiêu", value: remainedValue },
+        { name: "Hiện tại", value: filledValue },
+      ]
+    : additionalData // Use additional data if available
+    ? additionalData
     : [
         { name: "Free", value: remainedValue },
         { name: "Premium", value: filledValue },

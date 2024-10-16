@@ -9,6 +9,14 @@ export const fetchAllUsers = async (limit = 10, sort = "desc") => {
   return response.json(); 
 };
 
+export const fetchAllUsers2 = async (sort = "desc") => {
+  const response = await fetch(`${API_URL}/get-all?sort=${sort}`);
+  if (!response.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  return response.json();
+};
+
 export const createUser = async (userData) => {
   const response = await fetch(`${API_URL}/add`, {
     method: "POST",
