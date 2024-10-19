@@ -29,15 +29,21 @@ const MenuTable = () => {
     const fetchData = async () => {
       try {
         const data = await fetchAllMenus(); // Gọi API để lấy danh sách menu
+        const urlRegex = /(https?:\/\/[^\s]+)/g; // Biểu thức chính quy để tìm URL
         const formattedData = data.results
           .sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate)) // Sắp xếp theo createdDate
           .map((menu) => ({
             id: menu.id,
             menuName: menu.menuName,
             dietitianName: menu.dietitian.name, // Tên chuyên gia dinh dưỡng
-            description: menu.description,
-            suitableFor: menu.suitableFor === 0 ? "Diabetes" : menu.suitableFor === 1 ? "Gout" : "Both", // Điều kiện logic cho suitableFor
-            status: menu.status === 0 ? "Pending" : "Completed", // Điều kiện logic cho status
+            description: menu.description.replace(urlRegex, ''), // Loại bỏ URL khỏi phần mô tả
+            suitableFor:
+              menu.suitableFor === 0
+                ? 'Diabetes'
+                : menu.suitableFor === 1
+                ? 'Gout'
+                : 'Both', // Điều kiện logic cho suitableFor
+            status: menu.status === 0 ? 'Pending' : 'Completed', // Điều kiện logic cho status
             totalCalories: menu.totalCalories,
             totalCarbohydrates: menu.totalCarbohydrates,
             totalProtein: menu.totalProtein,
@@ -47,15 +53,15 @@ const MenuTable = () => {
             totalPurine: menu.totalPurine,
             totalCholesterol: menu.totalCholesterol,
             createdDate: new Date(menu.createdDate).toLocaleDateString(),
-            isDeleted: menu.isDeleted ? "Deleted" : "Active", // Trạng thái xóa
+            isDeleted: menu.isDeleted ? 'Deleted' : 'Active', // Trạng thái xóa
           }));
-
+  
         setTableData(formattedData);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error('Error fetching data:', error);
       }
     };
-
+  
     fetchData();
   }, []);
 
