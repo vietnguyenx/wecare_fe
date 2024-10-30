@@ -38,27 +38,37 @@
     table {
       min-width: 900px;
       width: 100%;
-      border-collapse: collapse; // Giúp sát nhập đường viền
+      border-collapse: separate; // Thay đổi từ collapse sang separate để hiển thị các đường kẻ giữa cột
+      border-spacing: 0; // Loại bỏ khoảng cách giữa các ô
       color: var(--text-color-inverted);
 
       td,
       th {
-        padding: 14px 12px;
-        border-bottom: 1px solid var(--tbl-border-color); // Đường kẻ giữa các ô
+        padding: 8px 6px; // Giảm padding
+        font-size: 14px; // Giảm kích thước phông chữ
+        border-bottom: 1px solid var(--tbl-border-color);
+        border-right: 1px solid var(--tbl-border-color); // Thêm border bên phải để tạo đường kẻ
         @media (max-width: 768px) {
-          font-size: 15px;
-          padding: 12px 10px;
+          font-size: 12px;
+          padding: 6px 4px;
+        }
+
+        &:last-child {
+          border-right: none; // Không có border ở cột cuối cùng
         }
       }
 
       thead {
         text-align: left;
-        font-size: 17px;
+        font-size: 15px; // Giảm kích thước phông chữ
         background-color: var(--thead-bg-color);
 
         th {
+          border-bottom: 2px solid var(--tbl-border-color);
+          border-right: 1px solid var(--tbl-border-color); // Thêm border bên phải để tạo đường kẻ
+
           &:last-child {
-            text-align: center;
+            border-right: none; // Không có border ở cột cuối cùng
           }
         }
       }
@@ -90,45 +100,6 @@
           text-transform: capitalize;
         }
       }
-    }
-  }
-
-  .action-dropdown-btn {
-    color: var(--text-color-inverted);
-    position: relative;
-  }
-
-  .action-dropdown-menu {
-    position: absolute;
-    top: 100%;
-    right: 50%;
-    transform: translateX(50%);
-    height: auto;
-    min-width: 80px;
-    box-shadow: rgba(100, 100, 111, 0.1) 0px 1px 4px 0px;
-    background-color: var(--secondary-color);
-    padding: 6px 10px;
-    z-index: 1;
-    border-radius: 8px;
-    border: 1px solid var(--border-color-inverted);
-    text-align: left;
-  }
-
-  .dropdown-menu-item {
-    margin: 8px 0;
-  }
-
-  .dropdown-menu-link {
-    color: var(--text-color-inverted);
-    font-weight: 600;
-    transition: var(--default-transition);
-    border-radius: 30px;
-    padding: 8px; // Thêm padding để tăng diện tích nhấp chuột
-  
-    &:hover {
-      opacity: 0.9; // Giảm độ mờ
-      background-color: #4CAF4F;
-      border-radius: 10px; // Bo góc nhẹ cho nút 
     }
   }
 
@@ -185,5 +156,4 @@
   .confirm-dialog .cancel-button:hover {
     background-color: #FF8718; /* Màu nền khi hover */
   }
-  
 }

@@ -59,6 +59,19 @@ const MenuModal = ({ onClose, onMenuCreated }) => {
     }
   };
 
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [onClose]);
+
   return (
     <div className="modal">
       <div className="modal-content">
@@ -92,6 +105,7 @@ const MenuModal = ({ onClose, onMenuCreated }) => {
           <input type="number" name="totalPurine" placeholder="Tổng Purine" onChange={handleChange} />
           <input type="number" name="totalCholesterol" placeholder="Tổng Cholesterol" onChange={handleChange} />
           <button type="submit">Tạo Menu</button>
+          <button type="button" className="cancel-button" onClick={onClose}>Hủy</button>
         </form>
       </div>
     </div>

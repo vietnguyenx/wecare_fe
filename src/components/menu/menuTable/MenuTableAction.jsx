@@ -71,7 +71,7 @@ const MenuTableAction = ({ menuId, onMenuDeleted, menuName }) => {
       {/* Hộp thoại xác nhận xóa */}
       {showConfirm && (
         <div className="confirm-dialog">
-          <p>Bạn có chắc muốn xoá menu {menuName}?</p>
+          <p>Bạn có chắc muốn xoá {menuName}?</p>
           <button onClick={confirmDeleteMenu} className="confirm-button">Xóa</button>
           <button onClick={() => setShowConfirm(false)} className="cancel-button">Hủy</button>
         </div>

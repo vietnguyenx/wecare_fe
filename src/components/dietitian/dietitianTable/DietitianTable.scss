@@ -38,27 +38,37 @@
     table {
       min-width: 900px;
       width: 100%;
-      border-collapse: collapse; // Giúp sát nhập đường viền
+      border-collapse: separate; // Thay đổi từ collapse sang separate để hiển thị các đường kẻ giữa cột
+      border-spacing: 0; // Loại bỏ khoảng cách giữa các ô
       color: var(--text-color-inverted);
 
       td,
       th {
-        padding: 14px 12px;
-        border-bottom: 1px solid var(--tbl-border-color); // Đường kẻ giữa các ô
+        padding: 8px 6px; // Giảm padding
+        font-size: 14px; // Giảm kích thước phông chữ
+        border-bottom: 1px solid var(--tbl-border-color);
+        border-right: 1px solid var(--tbl-border-color); // Thêm border bên phải để tạo đường kẻ
         @media (max-width: 768px) {
-          font-size: 15px;
-          padding: 12px 10px;
+          font-size: 12px;
+          padding: 6px 4px;
+        }
+
+        &:last-child {
+          border-right: none; // Không có border ở cột cuối cùng
         }
       }
 
       thead {
         text-align: left;
-        font-size: 17px;
+        font-size: 15px; // Giảm kích thước phông chữ
         background-color: var(--thead-bg-color);
 
         th {
+          border-bottom: 2px solid var(--tbl-border-color);
+          border-right: 1px solid var(--tbl-border-color); // Thêm border bên phải để tạo đường kẻ
+
           &:last-child {
-            text-align: center;
+            border-right: none; // Không có border ở cột cuối cùng
           }
         }
       }
@@ -67,31 +77,26 @@
         text-align: center;
       }
 
-    
-
-      .dt-diseaseType {
+      .dt-userType {
         display: flex;
         align-items: center;
         justify-content: flex-start;
         column-gap: 6px;
 
-        .dt-diseaseType-dot {
+        .dt-userType-dot {
           width: 8px;
           height: 8px;
           border-radius: 100%;
 
-          &.dot-diabetes {
-            background-color: var(--red-color);
-          }
-          &.dot-gout {
-            background-color: var(--blue-color);
-          }
-          &.dot-both {
+          &.dot-premium {
             background-color: var(--orange-color);
+          }
+          &.dot-free {
+            background-color: #808080;
           }
         }
 
-        .dt-diseaseType-text {
+        .dt-userType-text {
           text-transform: capitalize;
         }
       }
