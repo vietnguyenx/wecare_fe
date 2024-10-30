@@ -37,10 +37,10 @@ const UserTable = () => {
             email: user.email,
             dob: user.dob,
             address: user.address,
-            gender: user.gender === 0 ? "Male" : user.gender === 1 ? "Female" : "Other", // Điều kiện logic mới
+            gender: user.gender === 0 ? "Nam" : user.gender === 1 ? "Nữ" : "Khác",
             phone: user.phone,
             userType: user.userType === 0 ? "Free" : "Premium", // Điều kiện logic mới
-            diseaseType: user.diseaseType === 0 ? "Diabetes" : user.diseaseType === 1 ? "Gout" : "Both", // Điều kiện logic mới
+            diseaseType: user.diseaseType === 0 ? "Tiểu đường" : user.diseaseType === 1 ? "Gout" : "Cả hai", // Điều kiện logic mới
             userRole: user.userRole === 0 ? "Admin" : user.userRole === 1 ? "Staff" : "User", // Điều kiện logic mới
             createDate: new Date(user.createdDate).toLocaleDateString(), // Định dạng ngày tạo
             isDeleted: user.isDeleted ? "Deleted" : "Active", // Hiển thị trạng thái
@@ -117,7 +117,9 @@ const UserTable = () => {
                 <td>{dataItem.diseaseType}</td>
                 <td>{dataItem.userRole}</td>
                 <td>{dataItem.createDate}</td>
-                <td>{dataItem.isDeleted}</td>
+                <td className={`status-cell ${dataItem.isDeleted === 'Deleted' ? 'deleted' : 'active'}`}>
+                  {dataItem.isDeleted === 'Deleted' ? 'Đã xóa' : 'Hoạt động'}
+                </td>
                 <td className="dt-cell-action">
                   <UserTableAction 
                     userId={dataItem.id} 

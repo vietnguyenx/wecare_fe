@@ -73,6 +73,19 @@
         }
       }
 
+      .status-cell {
+        font-weight: bold; // Tô đậm chữ cho rõ ràng
+        padding: 8px 6px; // Đảm bảo padding giống với các ô khác
+      
+        &.active {
+          color: green; // Màu chữ cho trạng thái Active
+        }
+      
+        &.deleted {
+          color: red; // Màu chữ cho trạng thái Deleted
+        }
+      }
+
       .dt-cell-action {
         text-align: center;
       }

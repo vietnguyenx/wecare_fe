@@ -41,8 +41,8 @@ const MenuTable = () => {
         menuName: menu.menuName,
         dietitianName: menu.dietitian.name,
         description: menu.description,
-        suitableFor: menu.suitableFor === 0 ? 'Diabetes' : (menu.suitableFor === 1 ? 'Gout' : 'Both'),
-        status: menu.status === 0 ? 'Pending' : 'Completed',
+        suitableFor: menu.suitableFor === 0 ? 'Bệnh tiểu đường' : (menu.suitableFor === 1 ? 'Bệnh gout' : 'Cả hai'),  
+        status: menu.status === 0 ? 'Đang chờ' : 'Hoàn thành', // Thay đổi ở đây
         totalCalories: menu.totalCalories,
         totalCarbohydrates: menu.totalCarbohydrates,
         totalProtein: menu.totalProtein,
@@ -120,7 +120,10 @@ const MenuTable = () => {
                 <td>{dataItem.totalPurine}</td>
                 <td>{dataItem.totalCholesterol}</td>
                 <td>{dataItem.createdDate}</td>
-                <td>{dataItem.isDeleted}</td>
+                <td className={`status-cell ${dataItem.isDeleted === 'Deleted' ? 'deleted' : 'active'}`}>
+                  {dataItem.isDeleted === 'Deleted' ? 'Đã xóa' : 'Hoạt động'}
+                </td>
+
                 <td className="dt-cell-action">
                   <MenuTableAction 
                     menuId={dataItem.id} 

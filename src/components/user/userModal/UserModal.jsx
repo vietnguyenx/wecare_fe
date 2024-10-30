@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { createUser } from "../../../services/userService"; // Gọi API tạo người dùng
 import "./UserModal.scss";
 
@@ -49,6 +49,22 @@ const UserModal = ({ onClose, onUserCreated }) => {
             console.error("Failed to create user:", error);
         }
     };
+
+    // Handle keydown event
+    const handleKeyDown = (e) => {
+        if (e.key === "Escape") {
+        onClose(); // Close modal when Escape is pressed
+        }
+    };
+
+
+    useEffect(() => {
+        window.addEventListener("keydown", handleKeyDown);
+        
+        return () => {
+        window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, []); 
 
     return (
         <div className="modal-overlay">

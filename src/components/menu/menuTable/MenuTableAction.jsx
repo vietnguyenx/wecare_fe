@@ -55,12 +55,12 @@ const MenuTableAction = ({ menuId, onMenuDeleted, menuName }) => {
             <ul className="dropdown-menu-list">
               <li className="dropdown-menu-item">
                 <Link to="/view" className="dropdown-menu-link">
-                  Edit
+                  Sửa
                 </Link>
               </li>
               <li className="dropdown-menu-item">
                 <button onClick={handleDeleteMenu} className="dropdown-menu-link">
-                  Delete
+                  Xoá
                 </button>
               </li>
             </ul>

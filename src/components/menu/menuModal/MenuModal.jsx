@@ -75,7 +75,6 @@ const MenuModal = ({ onClose, onMenuCreated }) => {
   return (
     <div className="modal">
       <div className="modal-content">
-        <span className="close" onClick={onClose}>&times;</span>
         <h2>Tạo mới Menu</h2>
         <form onSubmit={handleSubmit}>
           <input type="text" name="menuName" placeholder="Tên menu" onChange={handleChange} required />

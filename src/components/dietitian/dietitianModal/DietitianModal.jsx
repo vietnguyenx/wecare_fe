@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { createDietitian } from "../../../services/dietitianService"; // Import dietitian service
 import "./DietitianModal.scss";
 
@@ -42,6 +42,23 @@ const DietitianModal = ({ onClose, onDietitianCreated }) => {
     }
   };
 
+  // Handle keydown event
+  const handleKeyDown = (e) => {
+    if (e.key === "Escape") {
+      onClose(); // Close modal when Escape is pressed
+    }
+  };
+
+  // Use effect to add event listener
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    
+    // Clean up event listener on component unmount
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []); // Run once when component mounts
+
   return (
     <div className="modal-overlay">
       <div className="modal-content">
@@ -81,8 +98,8 @@ const DietitianModal = ({ onClose, onDietitianCreated }) => {
             required
           />
           <button type="submit">Tạo mới</button>
+          <button type="button" className="cancel-button" onClick={onClose}>Hủy</button>
         </form>
-        <button className="close-modal-button" onClick={onClose}>Đóng</button>
       </div>
     </div>
   );

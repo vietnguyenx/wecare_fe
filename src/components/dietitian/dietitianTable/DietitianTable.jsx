@@ -95,7 +95,9 @@ const DietitianTable = () => {
                 <td>{dataItem.phone}</td>
                 <td>{dataItem.specialization}</td>
                 <td>{dataItem.createDate}</td>
-                <td>{dataItem.isDeleted}</td>
+                <td className={`status-cell ${dataItem.isDeleted === 'Deleted' ? 'deleted' : 'active'}`}>
+                  {dataItem.isDeleted === 'Deleted' ? 'Đã xóa' : 'Hoạt động'}
+                </td>
                 <td className="dt-cell-action">
                   <DietitianTableAction 
                     dietitianId={dataItem.id} 
