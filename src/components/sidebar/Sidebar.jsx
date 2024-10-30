@@ -66,13 +66,19 @@ const Sidebar = () => {
     setShowLogoutConfirm(false); // Ẩn thông báo xác nhận
   };
 
+  // Hàm xử lý click logo để quay lại dashboard
+  const handleLogoClick = () => {
+    navigate("/dashboard"); // Điều hướng về trang dashboard
+    closeSidebar(); // Đóng sidebar nếu cần
+  };
+
   return (
     <nav
       className={`sidebar ${isSidebarOpen ? "sidebar-show" : ""}`}
       ref={navbarRef}
     >
       <div className="sidebar-top">
-        <div className="sidebar-brand">
+        <div className="sidebar-brand" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
           <img src={WeCareLogo} alt="WeCare Logo" />
           <span className="sidebar-brand-text">
             <span className="brand-we">We</span>

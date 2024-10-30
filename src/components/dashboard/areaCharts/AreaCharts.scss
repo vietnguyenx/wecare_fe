@@ -75,6 +75,32 @@
   }
 }
 
+.month-selector {
+  display: flex;
+  justify-content: center; /* Căn giữa các nút bấm */
+  margin-top: 20px; /* Khoảng cách giữa biểu đồ và nút bấm */
+}
+
+.month-button {
+  background-color: #4CAF4F; /* Màu nền nút */
+  color: white; /* Màu chữ */
+  border: none; /* Bỏ viền */
+  border-radius: 5px; /* Bo tròn góc */
+  padding: 10px 15px; /* Khoảng cách bên trong nút */
+  margin: 0 5px; /* Khoảng cách giữa các nút */
+  cursor: pointer; /* Con trỏ chuột chuyển thành tay khi di chuột lên nút */
+  transition: background-color 0.3s; /* Hiệu ứng chuyển màu khi hover */
+}
+
+.month-button:hover {
+  background-color: #3e8e41; /* Màu nền khi hover */
+}
+
+.month-button.active {
+  background-color: #FF8718; /* Màu nền khi nút đang được chọn */
+}
+
+
 // progress chart
 .progress-bar {
   padding: 16px;

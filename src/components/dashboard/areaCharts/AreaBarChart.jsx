@@ -16,9 +16,13 @@ import "./AreaCharts.scss";
 
 const AreaBarChart = () => {
   const { theme } = useContext(ThemeContext);
-  const [monthlyRevenueData, setMonthlyRevenueData] = useState([]);
+  const [dailyRevenueData, setDailyRevenueData] = useState([]); // Dữ liệu doanh thu theo ngày
+  const [totalRevenue, setTotalRevenue] = useState(0); // Tổng doanh thu
+  const [percentageChange, setPercentageChange] = useState(0); // Tỷ lệ phần trăm thay đổi
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth()); // Tháng đã chọn
+  const [monthlyRevenueData, setMonthlyRevenueData] = useState([]); // Dữ liệu doanh thu theo tháng
 
-  const revenueTarget = 1000000; // Mục tiêu doanh thu mỗi tháng là 50 triệu
+  const revenueTarget = 6000000; // Mục tiêu doanh thu mỗi tháng là 1 triệu
   const premiumUserPrice = 199000; // Giá của người dùng Premium
 
   useEffect(() => {
@@ -29,18 +33,23 @@ const AreaBarChart = () => {
 
         // Tạo đối tượng đếm doanh thu hàng tháng
         const revenueByMonth = Array(12).fill(0);
+        const revenueByDay = Array(31).fill(0); // Tạo đối tượng đếm doanh thu hàng ngày
 
-        // Tính toán doanh thu theo tháng
+        // Tính toán doanh thu theo tháng và theo ngày
         users.forEach(user => {
           const createdDate = new Date(user.createdDate);
           const month = createdDate.getMonth(); // Lấy tháng từ 0-11
+          const day = createdDate.getDate() - 1; // Lấy ngày (0-30)
 
           if (user.userType === 1) { // Nếu là Premium user
             revenueByMonth[month] += premiumUserPrice;
+            if (month === selectedMonth) { // Nếu tháng khớp với tháng đã chọn
+              revenueByDay[day] += premiumUserPrice; // Cộng doanh thu vào ngày tương ứng
+            }
           }
         });
 
-        // Chuyển đổi dữ liệu thành định dạng cho biểu đồ
+        // Chuyển đổi dữ liệu tháng thành định dạng cho biểu đồ
         const chartData = revenueByMonth.map((revenue, index) => {
           const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
           return {
@@ -51,13 +60,39 @@ const AreaBarChart = () => {
         });
 
         setMonthlyRevenueData(chartData);
+
+        // Chuyển đổi dữ liệu ngày thành định dạng cho biểu đồ
+        const dailyChartData = revenueByDay.map((revenue, index) => {
+          return {
+            day: index + 1,
+            revenue,
+            target: revenueTarget / 31, // Mục tiêu doanh thu mỗi ngày (giả sử chia đều)
+          };
+        });
+
+        setDailyRevenueData(dailyChartData);
+
+        // Tính doanh thu tổng
+        const totalRevenue = revenueByMonth.reduce((acc, curr) => acc + curr, 0);
+        setTotalRevenue(totalRevenue);
+
+        // Tính tỷ lệ phần trăm thay đổi (giữ nguyên phần này)
+        const currentMonthRevenue = revenueByMonth[new Date().getMonth()];
+        const previousMonthRevenue = revenueByMonth[new Date().getMonth() - 1 >= 0 ? new Date().getMonth() - 1 : 11];
+        
+        if (previousMonthRevenue > 0) {
+          const change = ((currentMonthRevenue - previousMonthRevenue) / previousMonthRevenue) * 100;
+          setPercentageChange(change.toFixed(2)); // Giữ hai chữ số thập phân
+        } else {
+          setPercentageChange(0);
+        }
       } catch (error) {
         console.error("Failed to fetch data:", error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [selectedMonth]); // Khi tháng đã chọn thay đổi, gọi lại hàm fetchData
 
   const formatTooltipValue = (value) => {
     return `${(value / 1000).toLocaleString()}k`;
@@ -76,19 +111,20 @@ const AreaBarChart = () => {
       <div className="bar-chart-info">
         <h5 className="bar-chart-title">Doanh Thu Tài Khoản Premium</h5>
         <div className="chart-info-data">
-          <div className="info-data-value">50.4K</div>
+          <div className="info-data-value">{(totalRevenue / 1000).toLocaleString()}K</div>
           <div className="info-data-text">
             <FaArrowUpLong />
-            <p>5% so với tháng trước.</p>
+            <p>{percentageChange > 0 ? `+${percentageChange}% so với tháng trước.` : `${percentageChange}% so với tháng trước.`}</p>
           </div>
         </div>
       </div>
+
       <div className="bar-chart-wrapper">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             width={500}
             height={200}
-            data={monthlyRevenueData}
+            data={dailyRevenueData}
             margin={{
               top: 5,
               right: 5,
@@ -98,7 +134,7 @@ const AreaBarChart = () => {
           >
             <XAxis
               padding={{ left: 10 }}
-              dataKey="month"
+              dataKey="day"
               tickSize={0}
               axisLine={false}
               tick={{
@@ -147,6 +183,18 @@ const AreaBarChart = () => {
             />
           </BarChart>
         </ResponsiveContainer>
+      </div>
+
+      <div className="month-selector">
+        {["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].map((month, index) => (
+          <button 
+            key={index} 
+            onClick={() => setSelectedMonth(index)} 
+            className={`month-button ${selectedMonth === index ? "active" : ""}`}
+          >
+            {month}
+          </button>
+        ))}
       </div>
     </div>
   );

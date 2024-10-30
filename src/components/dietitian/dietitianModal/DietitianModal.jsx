@@ -49,15 +49,14 @@ const DietitianModal = ({ onClose, onDietitianCreated }) => {
     }
   };
 
-  // Use effect to add event listener
+
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
     
-    // Clean up event listener on component unmount
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, []); // Run once when component mounts
+  }, []); 
 
   return (
     <div className="modal-overlay">
