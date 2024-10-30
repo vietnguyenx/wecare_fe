@@ -8,3 +8,32 @@ export const fetchAllMenus = async (limit = 10, sort = "desc") => {
   }
   return response.json();
 };
+
+export const createMenu = async (menuData) => {
+  const response = await fetch(`${API_URL}/add`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(menuData),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to create menu");
+  }
+  return response.json();
+};
+
+export const deleteMenu = async (id) => {
+  const response = await fetch(`${API_URL}/delete?id=${id}`, {
+    method: "PUT", 
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to delete menu");
+  }
+  return response.json(); 
+};

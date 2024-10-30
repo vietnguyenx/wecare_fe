@@ -34,7 +34,7 @@ export const createUser = async (userData) => {
 
 export const deleteUser = async (id) => {
   const response = await fetch(`${API_URL}/delete?id=${id}`, {
-    method: "PUT", // Đảm bảo phương thức là PUT
+    method: "PUT", 
     headers: {
       "Content-Type": "application/json",
     },
@@ -43,5 +43,5 @@ export const deleteUser = async (id) => {
   if (!response.ok) {
     throw new Error("Failed to delete user");
   }
-  return response.json(); // Trả về kết quả từ API
+  return response.json(); 
 };
