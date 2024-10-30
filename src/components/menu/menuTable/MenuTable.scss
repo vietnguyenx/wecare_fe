@@ -124,7 +124,38 @@
         }
       }
     }
+    .confirm-dialog {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      border: 5px solid green;
+      border-radius: 15px;
+    }
     
+    .confirm-dialog p {
+      margin-bottom: 10px;
+    }
+    
+    .confirm-dialog button {
+      margin-right: 10px;
+      background-color: #4CAF4F; /* Màu nền nút */
+      color: white; /* Màu chữ */
+      border: none; /* Không có viền */
+      padding: 10px 15px; /* Padding cho nút */
+      border-radius: 5px; /* Bo góc nút */
+      cursor: pointer; /* Con trỏ khi hover */
+      transition: background-color 0.3s; /* Hiệu ứng chuyển màu */
+    }
+    
+    .confirm-dialog .confirm-button:hover,
+    .confirm-dialog .cancel-button:hover {
+      background-color: #FF8718; /* Màu nền khi hover */
+    }
     
   }
   

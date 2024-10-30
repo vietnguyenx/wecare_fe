@@ -91,44 +91,45 @@ const MenuTable = () => {
             </tr>
           </thead>
           <tbody>
-              {tableData.map((dataItem) => (
-                  <tr key={dataItem.id}>
-                      <td>{dataItem.menuName}</td>
-                      <td>{dataItem.dietitianName}</td>
-                      <td>
-                          {/* Tách phần mô tả thành các phần riêng biệt */}
-                          {dataItem.description.split('. ').map((part, index) => (
-                              <div key={index}>
-                                  {part.includes("Link:") ? (
-                                      <a href={part.replace("Link: ", "")} target="_blank" rel="noopener noreferrer">
-                                          Xem Video
-                                      </a>
-                                  ) : (
-                                      part
-                                  )}
-                              </div>
-                          ))}
-                      </td>
-                      <td>{dataItem.suitableFor}</td>
-                      <td>{dataItem.status}</td>
-                      <td>{dataItem.totalCalories}</td>
-                      <td>{dataItem.totalCarbohydrates}</td>
-                      <td>{dataItem.totalProtein}</td>
-                      <td>{dataItem.totalFat}</td>
-                      <td>{dataItem.totalFiber}</td>
-                      <td>{dataItem.totalSugar}</td>
-                      <td>{dataItem.totalPurine}</td>
-                      <td>{dataItem.totalCholesterol}</td>
-                      <td>{dataItem.createdDate}</td>
-                      <td>{dataItem.isDeleted}</td>
-                      <td className="dt-cell-action">
-                          <MenuTableAction 
-                              menuId={dataItem.id} 
-                              onMenuDeleted={handleMenuDeleted} 
-                          />
-                      </td>
-                  </tr>
-              ))}
+            {tableData.map((dataItem) => (
+              <tr key={dataItem.id}>
+                <td>{dataItem.menuName}</td>
+                <td>{dataItem.dietitianName}</td>
+                <td>
+                  {/* Tách phần mô tả thành các phần riêng biệt */}
+                  {dataItem.description.split('. ').map((part, index) => (
+                    <div key={index}>
+                      {part.includes("Link:") ? (
+                        <a href={part.replace("Link: ", "")} target="_blank" rel="noopener noreferrer">
+                          Xem Video
+                        </a>
+                      ) : (
+                        part
+                      )}
+                    </div>
+                  ))}
+                </td>
+                <td>{dataItem.suitableFor}</td>
+                <td>{dataItem.status}</td>
+                <td>{dataItem.totalCalories}</td>
+                <td>{dataItem.totalCarbohydrates}</td>
+                <td>{dataItem.totalProtein}</td>
+                <td>{dataItem.totalFat}</td>
+                <td>{dataItem.totalFiber}</td>
+                <td>{dataItem.totalSugar}</td>
+                <td>{dataItem.totalPurine}</td>
+                <td>{dataItem.totalCholesterol}</td>
+                <td>{dataItem.createdDate}</td>
+                <td>{dataItem.isDeleted}</td>
+                <td className="dt-cell-action">
+                  <MenuTableAction 
+                    menuId={dataItem.id} 
+                    onMenuDeleted={handleMenuDeleted} 
+                    menuName={dataItem.menuName} // Truyền tên menu vào
+                  />
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
