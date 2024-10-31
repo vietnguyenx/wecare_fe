@@ -31,19 +31,19 @@ const UserTable = () => {
         const formattedData = data.results
           .sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate)) // Sắp xếp theo createdDate
           .map((user) => ({
-            id: user.id,
-            username: user.username,
-            full_name: user.fullName,
-            email: user.email,
-            dob: user.dob.toLocaleDateString(),
-            address: user.address,
-            gender: user.gender === 0 ? "Nam" : user.gender === 1 ? "Nữ" : "Khác",
-            phone: user.phone,
-            userType: user.userType === 0 ? "Free" : "Premium", // Điều kiện logic mới
-            diseaseType: user.diseaseType === 0 ? "Tiểu đường" : user.diseaseType === 1 ? "Gout" : "Cả hai", // Điều kiện logic mới
-            userRole: user.userRole === 0 ? "Admin" : user.userRole === 1 ? "Staff" : "User", // Điều kiện logic mới
-            createDate: new Date(user.createdDate).toLocaleDateString(), // Định dạng ngày tạo
-            isDeleted: user.isDeleted ? "Deleted" : "Active", // Hiển thị trạng thái
+            id: user.id || "-",
+            username: user.username || "-",
+            full_name: user.fullName || "-",
+            email: user.email || "-",
+            dob: user.dob ? new Date(user.dob).toLocaleDateString() : "-",
+            address: user.address || "-",
+            gender: user.gender === 0 ? "Nam" : user.gender === 1 ? "Nữ" : user.gender === 2 ? "Khác" : "-",
+            phone: user.phone || "-",
+            userType: user.userType === 0 ? "Free" : user.userType === 1 ? "Premium" : "-",
+            diseaseType: user.diseaseType === 0 ? "Tiểu đường" : user.diseaseType === 1 ? "Gout" : user.diseaseType === 2 ? "Cả hai" : "-",
+            userRole: user.userRole === 0 ? "Admin" : user.userRole === 1 ? "Staff" : user.userRole === 2 ? "User" : "-",
+            createDate: user.createdDate ? new Date(user.createdDate).toLocaleDateString() : "-",
+            isDeleted: user.isDeleted ? "Deleted" : "Active",
           }));
 
         setTableData(formattedData); 

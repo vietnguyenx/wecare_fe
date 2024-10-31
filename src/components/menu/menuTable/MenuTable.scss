@@ -48,6 +48,8 @@
         font-size: 14px; 
         border-bottom: 1px solid var(--tbl-border-color);
         border-right: 1px solid var(--tbl-border-color); 
+        text-align: center; /* Căn giữa nội dung theo chiều ngang */
+        vertical-align: middle; /* Căn giữa nội dung theo chiều dọc */
         @media (max-width: 768px) {
           font-size: 12px;
           padding: 6px 4px;
