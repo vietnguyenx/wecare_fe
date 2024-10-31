@@ -35,7 +35,7 @@ const UserTable = () => {
             username: user.username,
             full_name: user.fullName,
             email: user.email,
-            dob: user.dob,
+            dob: user.dob.toLocaleDateString(),
             address: user.address,
             gender: user.gender === 0 ? "Nam" : user.gender === 1 ? "Nữ" : "Khác",
             phone: user.phone,
