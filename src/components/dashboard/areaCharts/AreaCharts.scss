@@ -75,29 +75,47 @@
   }
 }
 
-.month-selector {
+
+.month-year-selector {
   display: flex;
-  justify-content: center; /* Căn giữa các nút bấm */
-  margin-top: 20px; /* Khoảng cách giữa biểu đồ và nút bấm */
-}
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
 
-.month-button {
-  background-color: #4CAF4F; /* Màu nền nút */
-  color: white; /* Màu chữ */
-  border: none; /* Bỏ viền */
-  border-radius: 5px; /* Bo tròn góc */
-  padding: 10px 15px; /* Khoảng cách bên trong nút */
-  margin: 0 5px; /* Khoảng cách giữa các nút */
-  cursor: pointer; /* Con trỏ chuột chuyển thành tay khi di chuột lên nút */
-  transition: background-color 0.3s; /* Hiệu ứng chuyển màu khi hover */
-}
+  .year-dropdown {
+    margin-right: 50px;
+    background-color: #4CAF4F;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 7px 10px;
+    font-size: 16px;
+    cursor: pointer;
+  }
 
-.month-button:hover {
-  background-color: #3e8e41; /* Màu nền khi hover */
-}
+  .month-selector {
+    display: flex;
+  }
 
-.month-button.active {
-  background-color: #FF8718; /* Màu nền khi nút đang được chọn */
+  .month-button {
+    background-color: #4CAF4F;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .month-button:hover {
+    background-color: #3e8e41;
+  }
+
+  .month-button.active {
+    background-color: #FF8718;
+  }
 }
 
 

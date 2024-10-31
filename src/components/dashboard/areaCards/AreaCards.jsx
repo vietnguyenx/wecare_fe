@@ -14,7 +14,7 @@ const AreaCards = () => {
   const [isDataReady, setIsDataReady] = useState(false);
   
   // Đặt mục tiêu doanh thu cố định (ví dụ: 50 triệu đồng)
-  const revenueTarget = 12000000;
+  const revenueTarget = 199000*365;
 
   useEffect(() => {
     const fetchData = async () => {
