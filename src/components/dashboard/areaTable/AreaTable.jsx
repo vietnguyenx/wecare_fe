@@ -24,11 +24,11 @@ const AreaTable = () => {
         const formattedData = data.results
           .sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate)) // Sắp xếp theo createdDate
           .map((user) => ({
-            id: user.id,
-            username: user.username,
-            full_name: user.fullName,
-            email: user.email,
-            phone: user.phone,
+            id: user.id || "-",
+            username: user.username || "-",
+            full_name: user.fullName || "-",
+            email: user.email || "-",
+            phone: user.phone || "-",
             userType: user.userType === 1 ? "premium" : "free", // Đảm bảo đúng điều kiện
             diseaseType: user.diseaseType === 1 ? "Gout" : "Diabetes", // Đảm bảo đúng điều kiện
           }));
