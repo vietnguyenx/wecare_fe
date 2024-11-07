@@ -120,7 +120,7 @@ const AreaCards = () => {
         ]}
         percentFillValue={100} // Sử dụng phần trăm cho xu hướng menu
         cardInfo={{
-          title: "Xu hướng menu",
+          title: "Xu hướng thực đơn",
           value: 3,
         }}
       />
