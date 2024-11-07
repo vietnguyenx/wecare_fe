@@ -11,7 +11,7 @@ import {
 import { ThemeContext } from "../../../context/ThemeContext";
 import { FaArrowUpLong } from "react-icons/fa6";
 import { LIGHT_THEME } from "../../../constants/themeConstants";
-import { fetchAllUsers2 } from "../../../services/userService"; // Import user service
+import { fetchAllUsers2 } from "../../../services/userService";
 import "./AreaCharts.scss";
 
 const AreaBarChart = () => {
@@ -35,7 +35,7 @@ const AreaBarChart = () => {
         const userResponse = await fetchAllUsers2("desc");
         const users = userResponse.results;
         const daysInSelectedMonth = getDaysInMonth(selectedYear, selectedMonth);
-        const revenueTarget = premiumUserPrice * daysInSelectedMonth; // Tính revenueTarget
+        const revenueTarget = premiumUserPrice * daysInSelectedMonth;
 
         const revenueByMonth = Array(12).fill(0);
         const revenueByDay = Array(daysInSelectedMonth).fill(0);
@@ -59,7 +59,7 @@ const AreaBarChart = () => {
           return {
             month: monthNames[index],
             revenue,
-            target: revenueTarget, // Sử dụng revenueTarget đã tính toán
+            target: premiumUserPrice * getDaysInMonth(selectedYear, index),
           };
         });
 
@@ -69,18 +69,16 @@ const AreaBarChart = () => {
           return {
             day: index + 1,
             revenue,
-            target: revenueTarget / daysInSelectedMonth, // Cập nhật target cho từng ngày
+            target: revenueTarget / daysInSelectedMonth,
           };
         });
 
         setDailyRevenueData(dailyChartData);
 
-        const totalRevenue = revenueByMonth.reduce((acc, curr) => acc + curr, 0);
-        setTotalRevenue(totalRevenue);
+        const currentMonthRevenue = revenueByMonth[selectedMonth];
+        setTotalRevenue(currentMonthRevenue);
 
-        const currentMonthRevenue = revenueByMonth[new Date().getMonth()];
-        const previousMonthRevenue = revenueByMonth[new Date().getMonth() - 1 >= 0 ? new Date().getMonth() - 1 : 11];
-
+        const previousMonthRevenue = revenueByMonth[selectedMonth - 1 >= 0 ? selectedMonth - 1 : 11];
         if (previousMonthRevenue > 0) {
           const change = ((currentMonthRevenue - previousMonthRevenue) / previousMonthRevenue) * 100;
           setPercentageChange(change.toFixed(2));
@@ -120,7 +118,7 @@ const AreaBarChart = () => {
           </div>
         </div>
       </div>
-  
+
       <div className="bar-chart-wrapper">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
@@ -165,7 +163,7 @@ const AreaBarChart = () => {
           </BarChart>
         </ResponsiveContainer>
       </div>
-  
+
       <div className="month-year-selector">
         <select
           value={selectedYear}
@@ -178,7 +176,7 @@ const AreaBarChart = () => {
             </option>
           ))}
         </select>
-  
+
         <div className="month-selector">
           {["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].map((month, index) => (
             <button 
