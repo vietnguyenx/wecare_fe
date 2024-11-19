@@ -1,5 +1,5 @@
 // src/services/userService.js
-const API_URL = "https://wecareexe201.azurewebsites.net/api/user";
+const API_URL = "https://midge-noted-tuna.ngrok-free.app/api/user";
 
 export const fetchAllUsers = async (limit = 10, sort = "desc") => {
   const response = await fetch(`${API_URL}/get-all?limit=${limit}&sort=${sort}`);

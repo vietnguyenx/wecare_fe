@@ -1,5 +1,5 @@
 
-const API_URL = "https://wecareexe201.azurewebsites.net/api/menu";
+const API_URL = "https://midge-noted-tuna.ngrok-free.app/api/menu";
 
 export const fetchAllMenus = async (limit = 10, sort = "desc") => {
   const response = await fetch(`${API_URL}/get-all?limit=${limit}&sort=${sort}`);
